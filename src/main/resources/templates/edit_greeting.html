@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+<main>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">WePaste</h1>
+            <p class="lead text-muted">
+                Welcome to the Internet Clipboard. Here you can very simply create your own page, paste your text, save it and open it anywhere!
+
+                Just try the link below or make your own!
+            </p>
+        </div>
+    </section>
+</main>
+<div class="container-fluid">
+    <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Edit your content!</h4>
+        <form th:action="'/greeting/' + ${url.url}" method="POST">
+            <div class="form-group">
+                <div class="col-md-6 mb-3">
+                    <input type="hidden" name="url" class="form-control" id="url" placeholder="Type a name here"
+                           required="true" th:value="${url.url}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="content">Content for your link</label>
+                <!-- Add url content here -->
+                <textarea class="form-control" id="content" name="content" rows="3" th:text="${url.content}"></textarea>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+        </form>
+        <form th:action="'/greeting/'+ ${url.url}+'/delete'" method="POST">
+            <button class="btn btn-danger btn-lg btn-block" type="submit">Delete</button>
+        </form>
+        <p align="middle"><img src="https://www.w3schools.com/html/pulpitrock.jpg" /><p/>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

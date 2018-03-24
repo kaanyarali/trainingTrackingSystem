@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: cruncher
+    thymeleaf:
+        cache: false
+    template:
+        cache: false
+
+server:
+    port: 9000
