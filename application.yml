@@ -5,6 +5,10 @@ spring:
         cache: false
     template:
         cache: false
+    data:
+        mongodb:
+            uri: "mongodb://userJava:train123@ds111319.mlab.com:11319/trainingappdb"
 
 server:
     port: 9000
+

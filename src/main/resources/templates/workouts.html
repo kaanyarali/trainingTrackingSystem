@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workouts</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Workout Name</th>
+        <th>Created By</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="workout: ${workouts}">
+        <td th:text="${workout.getName()}"></td>
+        <td th:text="${workout.getCreatedBy().getUsername()}"></td>
+        <td>
+            <table>
+                <tbody>
+                <tr th:each="workoutItem: ${workout.getContent()}">
+                    <td th:text="${workoutItem.getMovement()}"></td>
+                    <td th:text="${workoutItem.getNumSets()} + 'x' + ${workoutItem.getNumRep()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

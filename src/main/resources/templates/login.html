@@ -26,7 +26,7 @@
 <body class="text-center">
 <div class="container">
     <video autoplay muted loop id="myVideo">
-        <source src="videos/video.mp4" type="video/mp4">
+        <source th:src="${randomvideo} ? 'videos/14471812.mp4' : 'videos/7455745.mp4'" type="video/mp4">
     </video>
     <div class="row">
         <div class="col">
@@ -36,8 +36,8 @@
     <div class="row">
         <form action="/signin" method="POST" class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal white">Please sign in</h1>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input name="username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            <label for="inputUseername" class="sr-only">Email address</label>
+            <input name="username" id="inputUseername" class="form-control" placeholder="Username" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <div class="checkbox mb-3 white">

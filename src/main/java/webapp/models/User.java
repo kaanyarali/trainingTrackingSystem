@@ -1,7 +1,11 @@
 package webapp.models;
 
+import org.springframework.data.annotation.Id;
+
 public class User {
-    private int id;
+
+    @Id
+    private String id;
     private String username;
     private String firstName;
     private String lastName;
@@ -10,15 +14,15 @@ public class User {
     private String role;
     private String password;
 
-    public User(int id, String username, String password) {
-        this.id = id;
+    public User() {}
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public User(int id, String username, String password,String firstName,String lastName,String fitnessCenter,
+    public User(String username, String password,String firstName,String lastName,String fitnessCenter,
                 String email,String role) {
-        this.id = id;
         this.username = username;
         this.password = password;
         this.firstName=firstName;
@@ -36,7 +40,7 @@ public class User {
         return password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

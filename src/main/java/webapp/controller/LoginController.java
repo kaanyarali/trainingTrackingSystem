@@ -1,73 +1,101 @@
 package webapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import webapp.exception.NotFoundException;
 import webapp.mappings.UserLoginMapping;
 import webapp.mappings.UserSignupMapping;
 import webapp.models.User;
+import webapp.repos.UserRepository;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Hashtable;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Controller
 public class LoginController {
 
-    private final AtomicInteger counter = new AtomicInteger();
-    private final Hashtable<String,User> userRepo=new Hashtable<>();
+    @Autowired
+    private UserRepository repository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(@CookieValue(value = "username", defaultValue = "") String username) {
-        if (userRepo.containsKey(username)) {
-            User user = userRepo.get(username);
-
-            if (user.getRole().equals("trainee")) {
+    @GetMapping(value = "/")
+    public String index(@CookieValue(value = "u_id", defaultValue = "") String userId, Model model) {
+        Optional<User> user = repository.findById(userId);
+        if (user.isPresent()) {
+            if (user.get().getRole().equals("trainee")) {
                 return "redirect:trainee_home";
             } else {
                 return "redirect:home";
             }
         }
+
+        // Decide which video to use on the front page
+        Random rand = new Random();
+        int randomNum = rand.nextInt(10);
+
+        repository.findAll();
+
+        model.addAttribute("randomvideo", randomNum > 5);
         return "login";
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST,
+
+    @PostMapping(value = "/signin",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String signin(UserLoginMapping userMapping, BindingResult result, HttpServletResponse response) {
         if (result.hasErrors()) {
             return "login";
         }
-        if(!userRepo.containsKey(userMapping.getUsername()) ||
-                !userRepo.get(userMapping.getUsername()).getPassword().equals(encryptPassword(userMapping.getPassword())))
+        // Find user in db by username
+        List<User> users = repository.findByUsername(userMapping.getUsername());
+        if (users.size() == 0) {
+            return "login";
+        }
+        User u = users.get(0);
+        // Check user password correct
+        if(!u.getPassword().equals(encryptPassword(userMapping.getPassword())))
         {
             return "login";
         }
-        User a=userRepo.get(userMapping.getUsername());
-        Cookie cookie = new Cookie("username",userMapping.getUsername());
+        // Set cookie
+        Cookie cookie = new Cookie("u_id",u.getId());
         response.addCookie(cookie);
-        if(a.getRole().equals("trainee"))
+        // Check user role, and redirect correspondingly to the home page
+        if(u.getRole().equals("trainee"))
         {
             return "redirect:trainee_home";
         }
         return "redirect:home";
     }
+
     @RequestMapping(value="/trainee_home",method=RequestMethod.GET)
-    public String homeTrainee(@CookieValue(value = "username", defaultValue = "") String username, Model model)  throws NotFoundException
+    public String homeTrainee(@CookieValue(value = "u_id", defaultValue = "") String userId, Model model)  throws NotFoundException
     {
-        if (userRepo.containsKey(username)) {
-            model.addAttribute("user", userRepo.get(username));
+        Optional<User> u = repository.findById(userId);
+        if (u.isPresent()) {
+            model.addAttribute("user", u.get());
             return "trainee_home";
         } else {
             throw new NotFoundException();
         }
+    }
+
+    @RequestMapping(value="/signout",method = RequestMethod.GET)
+    public String signOut(HttpServletResponse response)
+    {
+       Cookie cookie=new Cookie("u_id",null);
+       cookie.setMaxAge(0);
+       response.addCookie(cookie);
+       return "redirect:/";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -83,28 +111,43 @@ public class LoginController {
         {
             return "redirect:signup";
         }
-        if(userMapping.getUsername().equals("") || userRepo.containsKey(userMapping.getUsername()))
+
+        if(userMapping.getUsername().equals(""))
         {
             return "redirect:signup";
         }
+        List<User> users =repository.findByUsername(userMapping.getUsername());
+        if (users.size() > 0) {
+            return "redirect:signup";
+        }
 
+        // encrypt password
         String encryptedPassword=encryptPassword(userMapping.getPassword());
 
-        User a=new User(counter.incrementAndGet(),userMapping.getUsername(),encryptedPassword,userMapping.getFirstName(),
-                userMapping.getLastName(),userMapping.getFitness(),userMapping.getEmail(),userMapping.getRole());
-        userRepo.put(a.getUsername(),a);
-        Cookie cookie=new Cookie("username",a.getUsername());
+        User user = new User(userMapping.getUsername(), encryptedPassword, userMapping.getFirstName(),
+                userMapping.getLastName(), userMapping.getFitness(), userMapping.getEmail(), userMapping.getRole());
+        // Save the created user to the db
+        repository.save(user);
+        Cookie cookie = new Cookie("u_id", user.getId());
 
         response.addCookie(cookie);
+        if(user.getRole().equals("trainee"))
+        {
+            return "redirect:trainee_home";
+        }
         return "redirect:home";
     }
 
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(@CookieValue(value = "username", defaultValue = "") String username, Model model)
+    public String home(@CookieValue(value = "u_id", defaultValue = "") String userId, Model model)
             throws NotFoundException {
-        if (userRepo.containsKey(username)) {
-            model.addAttribute("user", userRepo.get(username));
+
+        Optional<User> user=repository.findById(userId);
+
+        if(user.isPresent())
+        {
+            model.addAttribute("user",user.get());
             return "home";
         } else {
             throw new NotFoundException();
