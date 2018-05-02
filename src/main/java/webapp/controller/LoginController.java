@@ -158,7 +158,7 @@ public class LoginController {
         /**
          * Encrypts the password passed to it using MD5 algorithm
          * @param password: Password to encrypt
-         * @returns: Encrypted password
+         * @returns: Encrypted password./gradlew build --continuous
          **/
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
