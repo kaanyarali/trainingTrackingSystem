@@ -12,20 +12,25 @@ public class Workout {
     private String id;
     private String name;
 
+    private int duration;
+
     @DBRef
     private User createdBy; // Trainee who has created
+
     private List<WorkoutItem> content;
 
-    public Workout() {}
+    public Workout() {
+    }
 
-    public Workout(String name, User createdBy) {
+    public Workout(String name, int duration, User createdBy) {
         this.name = name;
         this.createdBy = createdBy;
+        this.duration = duration;
         this.content = new ArrayList<>();
     }
 
-    public void addItem(Movement movement, int sets, int reps) {
-        content.add(new WorkoutItem(movement, sets, reps));
+    public void addItem(Movement movement, Integer sets, Integer reps, Integer weight, Integer rewardPoints) {
+        content.add(new WorkoutItem(movement, sets, reps, weight, rewardPoints));
     }
 
     public String getId() {
@@ -34,6 +39,10 @@ public class Workout {
 
     public String getName() {
         return name;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     public User getCreatedBy() {

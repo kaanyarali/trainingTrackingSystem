@@ -38,7 +38,7 @@ public class LoginController {
             }
         }
 
-        // Decide which video to use on the front page
+        // Decide which video to use on the front p age
         Random rand = new Random();
         int randomNum = rand.nextInt(10);
 
