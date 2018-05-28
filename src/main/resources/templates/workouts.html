@@ -94,27 +94,21 @@
             Existing Workouts
         </h1>
     </div>
-    <table>
+    <table class="table table-striped">
         <thead>
         <tr>
-            <th>Workout Name</th>
-            <th>Created By</th>
+            <th scope="col">Workout Name</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Reward Point</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="workout: ${workouts}">
             <td th:text="${workout.getName()}"></td>
-            <td th:text="${workout.getCreatedBy().getUsername()}"></td>
-            <td>
-                <table>
-                    <tbody>
-                    <tr th:each="workoutItem: ${workout.getContent()}">
-                        <td th:text="${workoutItem.getMovement()}"></td>
-                        <td th:text="${workoutItem.getNumSets()} + 'x' + ${workoutItem.getNumRep()}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
+            <td th:text="${workout.getDuration()}"></td>
+            <td th:text="${workout.getRewardingPoint()}"></td>
+            <td><a class="btn btn-primary" role="button" th:href="'/workouts/' + ${workout.getId()}">Go</a></td>
+        </tr>
         </tr>
         </tbody>
     </table>

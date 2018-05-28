@@ -5,14 +5,14 @@ import org.springframework.data.annotation.Id;
 public class User {
 
     @Id
-    private String id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String fitnessCenter;
-    private String email;
-    private String role;
-    private String password;
+    protected String id;
+    protected String username;
+    protected String firstName;
+    protected String lastName;
+    protected String fitnessCenter;
+    protected String email;
+    protected String role;
+    protected String password;
 
     public User() {}
 
@@ -50,6 +50,10 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getFullname() {
+        return getFirstName() + " " + getLastName();
     }
 
     public String getFitnessCenter() {

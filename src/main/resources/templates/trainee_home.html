@@ -5,33 +5,121 @@
     <title>Welcome Trainee,</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/dashboard/dashboard.css">
+
+    <style>
+body  {
+    background-image: url:("/videos/backgroundTry.jpg") ;
+}
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="/signout">Sign out</a>
-        </li>
-    </ul>
-</nav>
-<div class="container-fluid">
-    <div class="row">
-        <span th:text="'Hello ' + ${user.getUsername()}"></span>
-    </div>
-    <div class="row">
-        <span th:text="${user.getEmail()}"></span>
-    </div>
-    <div class="row">
-        <span th:text="${user.getUsername()}"></span>
-    </div>
-    <div class="row">
-        <span th:text="${user.getFitnessCenter()}"></span>
-    </div>
 
+
+
+<div class="container">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Training Tracking System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Workouts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">News Feed </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Progress Charts </a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="/signout">Sign out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="videos/aj.jpg" alt="Profile Picture" width="150" height="150"  class="rounded-bottom">
+        </div>
+        <div class="col-sm">
+            <span th:text="'Hello ' + ${user.getUsername()}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <span th:text="${user.getEmail()}"></span>
+        </div>
+        <div class="col-sm">
+            <span th:text="${user.getFitnessCenter()}"></span>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Workout Name</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Reward Point</th>
+        <th scope="col">Created By</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="workout: ${user.getWorkouts()}">
+        <td th:text="${workout.getName()}"></td>
+        <td th:text="${workout.getDuration()}"></td>
+        <td th:text="${workout.getRewardingPoint()}"></td>
+        <td th:text="${workout.getCreatedBy().getUsername()}"></td>
+        <td><a class="btn btn-primary" role="button" th:href="'/workouts/' + ${workout.getId()}">Go</a></td>
+    </tr>
+    </tr>
+    </tbody>
+</table>
+
+<div class="container">
+    <h1>NEWS FEED</h1>
+    <div th:each="Session: ${completedSessions}">
+        <li>
+            <span th:text= "'@' + ${user.getUsername() + ' finished '}"></span>
+            <span th:text="${Session.getWorkout().getName() + ' session at '}"></span>
+            <span th:text="${Session.getCompleteDate().toString() + ' which is created by '}"></span>
+            <span th:text="'@' + ${Session.getWorkout().getCreatedBy().getUsername() +' at '}"></span>
+            <span th:text="${Session.getCreatedDate().toString() +'. 🏆🏆🏆'}"></span>
+            <br>
+            <span th:text= "'@'+ ${user.getUsername() + ' got '}"></span>
+            <span th:text= "${Session.getCompletedRewardingPoint() + ' 🔥 rewarding points  for this workout session. '}"></span>
+        </li>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

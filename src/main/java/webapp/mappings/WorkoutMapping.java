@@ -1,10 +1,9 @@
 package webapp.mappings;
 
-import webapp.models.Movement;
-
 public class WorkoutMapping {
     private final String workoutName;
     private final int workoutDuration;
+    private final String description;
 
     // 10 motions (max)
 
@@ -69,7 +68,7 @@ public class WorkoutMapping {
     private final Integer rewards9;
     private final String move9;
 
-    public WorkoutMapping(String workoutName, int workoutDuration, Integer sets0, Integer reps0, Integer weight0,
+    public WorkoutMapping(String workoutName, int workoutDuration, String description, Integer sets0, Integer reps0, Integer weight0,
                           Integer rewards0, String move0, Integer sets1, Integer reps1, Integer weight1, Integer rewards1,
                           String move1, Integer sets2, Integer reps2, Integer weight2, Integer rewards2, String move2,
                           Integer sets3, Integer reps3, Integer weight3, Integer rewards3, String move3, Integer sets4,
@@ -80,6 +79,7 @@ public class WorkoutMapping {
                           Integer reps9, Integer weight9, Integer rewards9, String move9) {
         this.workoutName = workoutName;
         this.workoutDuration = workoutDuration;
+        this.description = description;
         this.sets0 = sets0;
         this.reps0 = reps0;
         this.weight0 = weight0;
@@ -132,6 +132,9 @@ public class WorkoutMapping {
         this.move9 = move9;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     public String getMove0() {
        return move0;

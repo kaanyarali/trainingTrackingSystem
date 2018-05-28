@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/checkout/form-validation.css">
+    <title>Home</title>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h2>Assesment</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+            <h4 class="mb-3">Enter Users Assesment Result</h4>
+            <form action="/Assessment" method="POST" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        Weight(kg)
+                        <input type="text" class="form-control" id="Weight" name="weight" placeholder="Please enter your weight" value="" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        Height(cm)
+                        <input type="text" class="form-control" id="height" name="height" placeholder="Please enter your height" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        Arm Size(Cm)
+                        <input type="text" class="form-control" id="armSize" name="armSize" placeholder="Please enter your arm size" value="" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        Chest Size(Cm)
+                        <input type="text" class="form-control" id="chestSize" name="chestSize" placeholder="Please enter your chest size" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        Waist Size(Cm)
+                        <input type="text" class="form-control" id="waistSize" name="waistSize" placeholder="Please enter your waist size" value="" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        Hips Size(Cm)
+                        <input type="text" class="form-control" id="hipsSize" name="hipsSize" placeholder="Please enter your hips size" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        Average Heart Rate
+                        <input type="text" class="form-control" id="heartRate" name="heartRate" placeholder="Please enter your average heart rate" value="" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                         Minutes Per Km
+                        <input type="text" class="form-control" id="minutesKm" name="minutesKm" placeholder="Please enter minutes/km " value="" required>
+                    </div>
+                </div>
+
+
+                <div class="motion">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Trainees</label>
+                                    <select name="traineeSelected" id="traineeSelected" class="form-control  btn btn-primary "  style="width: 150px;" >
+                                        <option th:each="trainee: ${trainer.getTraineeList()}"  th:value="${trainee.getId()}" th:text=${trainee.getUsername()} ></option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+
+
+                <hr class="mb-4">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+       //alert('hi');
+    });
+</script>
+</body>
+</html>

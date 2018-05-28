@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Workout {
@@ -15,15 +16,18 @@ public class Workout {
     private int duration;
 
     @DBRef
-    private User createdBy; // Trainee who has created
+    private User createdBy; // Trainer who has created
 
     private List<WorkoutItem> content;
+
+    private String description;
 
     public Workout() {
     }
 
-    public Workout(String name, int duration, User createdBy) {
+    public Workout(String name, String description, int duration, User createdBy) {
         this.name = name;
+        this.description = description;
         this.createdBy = createdBy;
         this.duration = duration;
         this.content = new ArrayList<>();
@@ -41,6 +45,10 @@ public class Workout {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public int getDuration() {
         return duration;
     }
@@ -51,5 +59,29 @@ public class Workout {
 
     public List<WorkoutItem> getContent() {
         return content;
+    }
+
+    public int getRewardingPoint()
+    {
+        int rewardingPoint=0;
+        Iterator<WorkoutItem> iterator = content.iterator();
+        while(iterator.hasNext())
+        {
+            rewardingPoint=rewardingPoint+iterator.next().getRewardPoints();
+        }
+        return rewardingPoint;
+    }
+
+    public String getThoughness() {
+        if (getRewardingPoint() >= 0 && getRewardingPoint() < 25) {
+            return "warning";
+        } else if (getRewardingPoint() >= 25 && getRewardingPoint() < 50) {
+            return "primary";
+        } else if (getRewardingPoint() >= 50 && getRewardingPoint() < 75) {
+            return "success";
+
+        } else {
+            return "danger";
+        }
     }
 }
