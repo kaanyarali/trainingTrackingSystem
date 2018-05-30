@@ -12,5 +12,6 @@ public interface AssesmentRepository extends MongoRepository<Assesment, String> 
 
     List<Assesment> findByCreatedBy(Trainer trainer);
     List<Assesment> findByCreatedByAndTrainee(Trainer trainer, Trainee trainee,Sort sort);
+    List<Assesment> findByTrainee(Trainee trainee);
 
 }

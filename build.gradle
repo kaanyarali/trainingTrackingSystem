@@ -26,6 +26,7 @@ jar {
 
 bootRun {
     main='webapp.Application'
+    jvmArgs=["-Djava.compiler=NONE"]
 }
 
 repositories {

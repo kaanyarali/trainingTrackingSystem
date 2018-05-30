@@ -2,7 +2,7 @@
     let _workoutId = ""
     let _sessionId = ""
     let _currentSession = {}
-    let _selectedMovement = ""
+    let _selectedMovement = {}
     $.fn.beginWorkout = function(workoutId) {
         $("#beginWorkoutBtn").attr("disabled", true)
         $.ajax({
@@ -53,8 +53,8 @@
         $("#workoutStarted").text("Started " + created.fromNow())
     }
 
-    $.fn.logWork = function(movement) {
-        _selectedMovement = movement
+    $.fn.logWork = function(movement, points, targetSets) {
+        _selectedMovement = {m: movement, p: points, t:targetSets}
         $("#myModal").modal()
     }
 
@@ -63,8 +63,8 @@
        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
        var modal = $(this)
        modal.find('input').val('')
-       modal.find('#movement').val(_selectedMovement)
-       modal.find('.modal-title').text('Log work for ' + _selectedMovement)
+       modal.find('#movement').val(_selectedMovement.m)
+       modal.find('.modal-title').text('Log work for ' + _selectedMovement.m)
     })
 
     $("#myModal .logBtn").click(function(event){
@@ -73,8 +73,8 @@
         $inputs.each(function() {
             values[this.name] = $(this).val();
         });
-        // TODO calculate reward points
-        values['rewardPoints'] = 100
+        values['rewardPoints'] = _selectedMovement.p * parseInt(values['numSets']) / _selectedMovement.t
+        console.log("Reward points " + values['rewardPoints'])
         $.ajax({
           type: 'POST',
           url: "/workouts/" + _workoutId + "/session/"+ _sessionId,
@@ -83,7 +83,7 @@
           data: JSON.stringify(values),
           success: function(data) {
             console.log(data)
-            $("#"+_selectedMovement).attr('disabled', true)
+            $("#"+_selectedMovement.m).attr('disabled', true)
             $("#myModal").modal('hide')
           }
         })

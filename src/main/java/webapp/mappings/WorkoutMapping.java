@@ -10,7 +10,7 @@ public class WorkoutMapping {
     private final Integer sets0;
     private final Integer reps0;
     private final Integer weight0;
-    private final Integer rewards0;
+    private final Integer rewards;
     private final String move0;
 
     private final Integer sets1;
@@ -69,7 +69,7 @@ public class WorkoutMapping {
     private final String move9;
 
     public WorkoutMapping(String workoutName, int workoutDuration, String description, Integer sets0, Integer reps0, Integer weight0,
-                          Integer rewards0, String move0, Integer sets1, Integer reps1, Integer weight1, Integer rewards1,
+                          Integer rewards, String move0, Integer sets1, Integer reps1, Integer weight1, Integer rewards1,
                           String move1, Integer sets2, Integer reps2, Integer weight2, Integer rewards2, String move2,
                           Integer sets3, Integer reps3, Integer weight3, Integer rewards3, String move3, Integer sets4,
                           Integer reps4, Integer weight4, Integer rewards4, String move4, Integer sets5, Integer reps5,
@@ -79,11 +79,11 @@ public class WorkoutMapping {
                           Integer reps9, Integer weight9, Integer rewards9, String move9) {
         this.workoutName = workoutName;
         this.workoutDuration = workoutDuration;
-        this.description = description;
+        this.description=description;
         this.sets0 = sets0;
         this.reps0 = reps0;
         this.weight0 = weight0;
-        this.rewards0 = rewards0;
+        this.rewards = rewards;
         this.move0 = move0;
         this.sets1 = sets1;
         this.reps1 = reps1;
@@ -130,6 +130,7 @@ public class WorkoutMapping {
         this.weight9 = weight9;
         this.rewards9 = rewards9;
         this.move9 = move9;
+
     }
 
     public String getDescription() {
@@ -304,8 +305,8 @@ public class WorkoutMapping {
         return weight9;
     }
 
-    public Integer getRewards0() {
-        return rewards0;
+    public Integer getRewards() {
+        return rewards;
     }
 
     public Integer getRewards1() {

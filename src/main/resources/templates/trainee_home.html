@@ -1,129 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome Trainee,</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/dashboard/dashboard.css">
+    <!-- These meta tags come first. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Bootstrap Theme Example</title>
+
+    <!-- Include the CSS -->
+    <link href="dist/toolkit-inverse.min.css" rel="stylesheet">
     <style>
-body  {
-    background-image: url:("/videos/backgroundTry.jpg") ;
-}
+        body {
+            padding: 50px;
+        }
+        #trainees .nav-link {
+            display: inline;
+        }
+        #trainees .nav-link img {
+            width: 26px;
+            margin: 0 auto;
+        }
+        #trainees .p-3 {
+            padding-bottom: 8px !important;
+        }
+        #assessments .nav-link {
+            display: inline;
+        }
+        #assessments .nav-link img {
+            width: 26px;
+            margin: 0 auto;
+        }
+        #assessments .col-sm-6 {
+            margin-bottom: 5px;
+        }
+        #assessments .col-sm-6 i {
+            color: rgba(255,255,255,.65);
+        }
+        #assessments .statcard-number .new-value {
+            font-size: 2em;
+        }
     </style>
+
 </head>
 <body>
-
-
-
-
-<div class="container">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Training Tracking System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Workouts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">News Feed </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Progress Charts </a>
-                </li>
-
-            </ul>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="/signout">Sign out</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
-<br>
-<br>
-<br>
 <div class="container">
     <div class="row">
-        <div class="col-sm">
-            <img src="videos/aj.jpg" alt="Profile Picture" width="150" height="150"  class="rounded-bottom">
+        <div class="col-md-3 sidebar">
+            <div class="sidebar-header">
+                <button class="nav-toggler nav-toggler-md sidebar-toggler" type="button" data-toggle="collapse" data-target="#nav-toggleable-md">
+                    <span class="sr-only">Toggle nav</span>
+                </button>
+                <a class="sidebar-brand img-responsive" href="../index.html">
+                    <!--<span class="icon icon-leaf sidebar-brand-icon"></span>-->
+                    <span>🏆🥇🥈🥉🏅🎖</span>
+                    <h2 class="dashhead-title" th:text="'Hello ' + ${user.getFullname()}"></h2>
+                </a>
+            </div>
+            <div class="collapse nav-toggleable-md" id="nav-toggleable-md">
+                <form class="sidebar-form">
+                    <input class="form-control" type="text" placeholder="Search...">
+                    <button type="submit" class="btn-link">
+                        <span class="icon icon-magnifying-glass"></span>
+                    </button>
+                </form>
+                <ul class="nav nav-pills nav-stacked flex-column">
+                    <li class="nav-header">Dashboard</li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" href="#home" >Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="workout-tab" href="#workouts" >Workouts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="assessment-tab" href="#assessments">Assessments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="feed" href="#newsFeed">NewsFeed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="signout" href="/signout">Sign Out</a>
+                    </li>
+
+                    <!--<li class="nav-header">More</li>-->
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link " href="../docs/index.html">-->
+                    <!--Toolkit docs-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="http://getbootstrap.com" target="blank">-->
+                    <!--Bootstrap docs-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link " href="../index.html">Dark UI</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#docsModal" data-toggle="modal">-->
+                    <!--Example modal-->
+                    <!--</a>-->
+                    <!--</li>-->
+                </ul>
+                <hr class="visible-xs mt-3">
+            </div>
+
         </div>
-        <div class="col-sm">
-            <span th:text="'Hello ' + ${user.getUsername()}"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <span th:text="${user.getEmail()}"></span>
-        </div>
-        <div class="col-sm">
-            <span th:text="${user.getFitnessCenter()}"></span>
+
+
+
+
+
+        <div class="tab-content col-md-9 content">
+            <div class="dashhead">
+                <div class="dashhead-titles">
+                    <h6 class="dashhead-subtitle">Dashboards</h6>
+                    <h2 class="dashhead-title">Overview</h2>
+                </div>
+                <div class="btn-toolbar dashhead-toolbar">
+                    <div class="btn-toolbar-item input-with-icon">
+                        <input type="text" value="01/01/15 - 01/08/15" class="form-control" data-provide="datepicker">
+                        <span class="icon icon-calendar"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="hr-divider my-4">
+                <h3 class="hr-divider-content hr-divider-heading">Quick stats</h3>
+            </div>
+            <div class="row statcards mt-3 mb-3 text-xs-center text-md-left">
+                <div class="col-6 col-md-3 statcard mb-4">
+                    <h3 th:if="${user.getWorkouts()!=null}" class="statcard-number text-success" th:text="${user.getWorkoutSize()}">
+                        <small class="delta-indicator delta-positive">5%</small>
+                    </h3>
+                    <span class="statcard-desc">Workouts</span>
+                </div>
+                <div class="col-6 col-md-3 statcard mb-4">
+                    <h3 th:if="${assessments!=null}" class="statcard-number text-danger" th:text="${assessments.size()}">
+                        1,293
+                        <small class="delta-indicator delta-positive">6.75%</small>
+                    </h3>
+                    <h3 th:if="${assessments==null}" class="statcard-number text-danger" th:text="${'0'}">
+                        1,293
+                        <small class="delta-indicator delta-positive">6.75%</small>
+                    </h3>
+
+                    <span class="statcard-desc">Assessments</span>
+                </div>
+            </div>
+            <div id="workouts" class="docs-example">
+                <div class="hr-divider">
+                    <h3 class="hr-divider-content hr-divider-heading">
+                        Workouts
+                    </h3>
+                </div>
+
+
+                <div th:if="${user.getWorkouts()!=null}" th:each="workout : ${user.getWorkouts()}" th:class="'statcard statcard-' + ${workout.getThoughness()} + ' p-4 mb-2'" >
+                    <h3 class="statcard-number">
+                        <a th:href="'/workouts/' + ${workout.getId()}" style="color:white" th:text="${workout.getName()}"></a>
+                        <a class="btn btn-lg btn-pill btn-warning" role="button" th:href="'/workouts/' + ${workout.getId()}">Begin Workout</a>
+                        <br>
+                        <small class="delta-indicator" th:text="${workout.getDuration()} + ' mins'"></small>
+                    </h3>
+                    <span th:text="${workout.getContent().size()} + ' items'"></span>
+                    <p class="statcard-desc" th:text="${workout.getDescription()}"></p>
+                </div>
+            </div>
+            <div id="assessments">
+                <div class="hr-divider">
+                    <h3 class="hr-divider-content hr-divider-heading">
+                        Assessments
+                    </h3>
+                </div>
+                <div class="row statcards mt-3 mb-3 text-xs-center text-md-left">
+                    <div th:if="${assessments!=null}" th:each="assessment : ${assessments}" class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6 statcard statcard-primary p-4">
+                                <div class="p-3">
+                                    <span class="statcard-desc" th:text="${assessment.getTrainee().getUsername()}"></span>
+                                    <a class="nav-link text-md-right" href="#" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Signed in as mdo">
+                                        <small class="iconav-nav-label d-md-none">@mdo</small>
+                                    </a>
+                                    <i th:text="${assessment.getFormattedDate()}"></i>
+                                </div>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getHeartRate()}" ></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHeartRateDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Heartbeats</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getArmSize()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getArmSizeDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Arm Size</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getHeight()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHeightDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Height</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getWeight()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getWeightDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Weight</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getChestSize()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getChestSizeDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Chest Size</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getWaistSize()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getWaistSizeDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Waist Size</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getHipsSize()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHipsSizeDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Hips Size</span>
+                                <div class="statcard-number">
+                                    <span class="new-value" th:text="${assessment.getMinutesKm()}"></span>
+                                    <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getMinutesKmDif()}"></small>
+                                </div>
+                                <span class="statcard-desc">Minutes Per Km</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="newsFeed" class="docs-example">
+                <div class="hr-divider">
+                    <h3 class="hr-divider-content hr-divider-heading">
+                        News Feed
+                    </h3>
+                </div>
+                <div th:if="${completedSessions!=null}" th:each="Session: ${completedSessions}" th:class="'statcard statcard-' + ${Session.getCompletedRewardingPoint()} + ' p-4 mb-2'" >
+                    <h3 class="statcard-number">
+                        <span th:text="${Session.getWorkout().getName()}"></span><i class="statcard-desc"> workout</i>
+                    </h3>
+                    <span th:text= "'@' + ${user.getUsername() + ' finished '}"></span>
+                    <span th:text="${Session.getWorkout().getName() + ' session at '}"></span>
+                    <span th:text="${Session.getCompleteDate().toString() + ' which is created by '}"></span>
+                    <span th:text="'@' + ${Session.getWorkout().getCreatedBy().getUsername() +' at '}"></span>
+                    <span th:text="${Session.getCreatedDate().toString() +'. 🏆🏆🏆'}"></span>
+                    <br>
+                    <span th:text= "'@'+ ${user.getUsername() + ' got '}"></span>
+                    <span th:text= "${Session.getCompletedRewardingPoint() + ' 🔥 rewarding points  for this workout session. '}"></span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-<br>
-<br>
-
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">Workout Name</th>
-        <th scope="col">Duration</th>
-        <th scope="col">Reward Point</th>
-        <th scope="col">Created By</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="workout: ${user.getWorkouts()}">
-        <td th:text="${workout.getName()}"></td>
-        <td th:text="${workout.getDuration()}"></td>
-        <td th:text="${workout.getRewardingPoint()}"></td>
-        <td th:text="${workout.getCreatedBy().getUsername()}"></td>
-        <td><a class="btn btn-primary" role="button" th:href="'/workouts/' + ${workout.getId()}">Go</a></td>
-    </tr>
-    </tr>
-    </tbody>
-</table>
-
-<div class="container">
-    <h1>NEWS FEED</h1>
-    <div th:each="Session: ${completedSessions}">
-        <li>
-            <span th:text= "'@' + ${user.getUsername() + ' finished '}"></span>
-            <span th:text="${Session.getWorkout().getName() + ' session at '}"></span>
-            <span th:text="${Session.getCompleteDate().toString() + ' which is created by '}"></span>
-            <span th:text="'@' + ${Session.getWorkout().getCreatedBy().getUsername() +' at '}"></span>
-            <span th:text="${Session.getCreatedDate().toString() +'. 🏆🏆🏆'}"></span>
-            <br>
-            <span th:text= "'@'+ ${user.getUsername() + ' got '}"></span>
-            <span th:text= "${Session.getCompletedRewardingPoint() + ' 🔥 rewarding points  for this workout session. '}"></span>
-        </li>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
+    <!-- Include jQuery (required) and the JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/chart.js"></script>
+    <script src="/dist/toolkit.min.js"></script>
+    <script src="/js/profile.js"></script>
 </html>

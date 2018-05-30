@@ -17,9 +17,9 @@ public class Session {
     @Id
     private String id;
 
-    @DBRef
+    @DBRef(lazy=true)
     private Workout workout;
-    @DBRef
+    @DBRef(lazy=true)
     private Trainee trainee;
     private ArrayList<WorkoutItem> workoutItems=new ArrayList<>();
     private boolean isCompleted;
@@ -96,12 +96,30 @@ public class Session {
     @JsonView(DetailedView.class)
     public int getCompletedRewardingPoint()
     {
+        //Iterator<WorkoutItem> itemIterator=workoutItems.iterator();
+       //while(itemIterator.hasNext())
+       //{
+           //completedRewardingPoint+=itemIterator.next().getRewardPoints();
+         //  System.out.println(itemIterator.next().getMovement());
+       //}
+        return completedRewardingPoint;
+    }
+    @JsonView(DetailedView.class)
+    public void setCompletedRewardingPoint() {
         Iterator<WorkoutItem> itemIterator=workoutItems.iterator();
         while(itemIterator.hasNext())
         {
             completedRewardingPoint+=itemIterator.next().getRewardPoints();
         }
-        return completedRewardingPoint;
     }
-
+    @JsonView(DetailedView.class)
+    public void showPoints()
+    {
+        int size=workout.getContent().size();
+        for(int i=0;i<size;i++)
+        {
+            System.out.println(workout.getContent().get(i).getMovement());
+            System.out.println(workout.getContent().get(i).getRewardPoints());
+        }
+    }
 }

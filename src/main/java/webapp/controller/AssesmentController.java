@@ -25,9 +25,6 @@ public class AssesmentController {
     @Autowired
     private AssesmentRepository assesmentRepository;
 
-
-
-
     @PostMapping(value = "/Assessment",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addTrainee(@CookieValue(value = "u_id")String userId , AssessmentMapping assesmentMapping,
@@ -67,7 +64,7 @@ public class AssesmentController {
     }
     private static int percentageCalculator(int first,int second)
     {
-        int dif=first-second;
+        int dif=(first-second);
         float dif1=((dif*100)/second);
         return (int) dif1;
     }

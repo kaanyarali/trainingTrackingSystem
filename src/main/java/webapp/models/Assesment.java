@@ -139,4 +139,33 @@ public class Assesment {
     {
         return DateFormat.getDateInstance(DateFormat.LONG).format(getCreatedDate());
     }
+
+    public String getAssessmentDifValues() {
+        return new AssessmentRatio().getAssessmentDifRatios();
+    }
+
+    public String getAssessmentDifLabels() {
+        return new AssessmentRatio().getAssessmentDifRatioNames();
+    }
+
+    private class AssessmentRatio {
+        public String getAssessmentDifRatios() {
+            float total = assesmentDifference.totalDiffRation();
+
+            return String.join(",",
+                    String.valueOf(Math.abs(assesmentDifference.getWeightDif()) * 100/total),
+                    String.valueOf(Math.abs(assesmentDifference.getWaistSizeDif()) * 100/total),
+                    String.valueOf(Math.abs(assesmentDifference.getArmSizeDif()) * 100/total),
+                    String.valueOf(Math.abs(assesmentDifference.getHeartRateDif()) * 100/total),
+                    String.valueOf(Math.abs(assesmentDifference.getChestSizeDif()) * 100/total),
+                    String.valueOf(Math.abs(assesmentDifference.getMinutesKmDif()) * 100/total),
+                    String.valueOf(Math.abs(assesmentDifference.getHipsSizeDif()) * 100/total));
+        }
+
+        public String getAssessmentDifRatioNames() {
+            return String.join(",",
+                    "'Weight'", "'Waist'", "'Arm'", "'Heart'", "'Chest'", "'Minutes'", "'Hips'");
+        }
+
+    }
 }

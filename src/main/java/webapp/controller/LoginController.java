@@ -1,6 +1,7 @@
 package webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -96,7 +97,7 @@ public class LoginController {
             Trainer trainer=(Trainer) kaan;
             List<User> users =repository.findByUsername(UserSearchMapping.getUsername());
             if (users.size() == 0) {
-                return "login";
+                return "redirect:home";
             }
             User u = users.get(0);
             if(u instanceof Trainee)
@@ -111,6 +112,7 @@ public class LoginController {
                     }
 
                 }
+
                 if(trainee.getMyTrainer() !=null)
                 {
                     trainee.getMyTrainer().deleteTrainee(trainee);
@@ -143,12 +145,15 @@ public class LoginController {
     {
         Optional<User> u = repository.findById(userId);
         if (u.isPresent()) {
-            model.addAttribute("user", u.get());
-            List<Session> completedSessions=sessionRepository.findByTraineeAndIsCompleted((Trainee) u.get(),true);
+            model.addAttribute("user",u.get());
+            List<Session> completedSessions=sessionRepository.findByTraineeAndIsCompleted((Trainee) u.get(),
+                    true, new Sort(Sort.Direction.DESC, "completeDate"));
+            List<Assesment> assesments=assesmentRepository.findByTrainee((Trainee) u.get());
             if(completedSessions.size()>0)
             {
                 model.addAttribute("completedSessions",completedSessions);
             }
+            model.addAttribute("assessments",assesments);
             return "trainee_home";
         } else {
             throw new NotFoundException();

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/dashboard/dashboard.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link href="/dist/toolkit-inverse.min.css" rel="stylesheet">
     <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -31,7 +31,7 @@
         form {
             border-radius: 20px;
             padding: 0.3em;
-            background-color: #F9F8F3;
+
         }
 
         form .row {
@@ -82,7 +82,7 @@
     <div class="col" th:text="${workoutItem.getRewardPoints()}"></div>
     <div class="col logWorkCol" th:style="${session_count} == 1 ? 'display:inline-block;' : 'display:none;'">
         <button th:id="${workoutItem.getMovement()}" class="btn btn-sm btn-outline-primary"
-        th:onclick="'$.fn.logWork(\''+ ${workoutItem.getMovement()} + '\')'">
+        th:onclick="'$.fn.logWork(\''+ ${workoutItem.getMovement()} + '\',' + ${workoutItem.getRewardPoints()} +','+ ${workoutItem.getNumSets()} + ')'">
             Log Work
         </button>
     </div>
@@ -97,29 +97,39 @@
                         <input type="text" name="username" class="form-control" id="username" placeholder="Type username">
                     </div>
                     <div class="col-3">
-                        <button class="btn btn-primary" type="submit">Assign</button>
+                        <button class="btn btn-lg btn-pill btn-success" type="submit">Assign</button>
                     </div>
                 </div>
             </form>
+            <a href="/home">
+                <div class="row">
+                    <div class="col-3">
+                        <button class="btn btn-lg btn-pill btn-danger" type="submit">Go back</button>
+                    </div>
+                </div>
+            </a>
         </div>
         <div th:case="trainee" class="col">
             <div class="row">
                 <div class="col-3">
-                    <button th:style="${session_count} == 0 ? 'display:inline-block;' : 'display:none;'" id="beginWorkoutBtn" class="btn btn-primary" type="submit"
+                    <button th:style="${session_count} == 0 ? 'display:inline-block;' : 'display:none;'" id="beginWorkoutBtn" class="btn btn-lg btn-pill btn-primary" type="submit"
                             th:onclick="'$.fn.beginWorkout(\''+ ${workout.getId()} + '\')'">Begin Workout</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-5">
-                    <button th:style="${session_count} == 1 ? 'display:inline-block;' : 'display:none;'" id="endWorkoutBtn" class="btn btn-danger" type="submit"
+                    <button th:style="${session_count} == 1 ? 'display:inline-block;' : 'display:none;'" id="endWorkoutBtn" class="btn btn-lg btn-pill btn-danger" type="submit"
                             th:onclick="'$.fn.endWorkout(\''+ ${workout.getId()} + '\', \'' + ${workout_session_id} + '\')'">End Workout</button>
                     <em id="workoutStarted"></em>
                 </div>
-
             </div>
+            <a href="/trainee_home">
+                <div class="col">
+                    <button class="btn btn-lg btn-pill btn-success" type="submit">Go back</button>
+                </div>
+            </a>
         </div>
     </div>
-
 </div>
 
 <!-- Modal -->

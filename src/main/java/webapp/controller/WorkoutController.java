@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import webapp.exception.BadRequestException;
 import webapp.exception.ForbiddenException;
 import webapp.exception.NotFoundException;
 import webapp.mappings.UserSearchMapping;
-import webapp.mappings.UserSignupMapping;
 import webapp.mappings.WorkoutMapping;
 import webapp.models.*;
 import webapp.repos.SessionRepository;
@@ -18,7 +18,6 @@ import webapp.repos.UserRepository;
 import webapp.repos.WorkoutRepository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -43,13 +42,14 @@ public class WorkoutController {
 
     @PostMapping(value = "/workouts",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createWorkouts(WorkoutMapping workoutMapping, BindingResult result,
+    public String createWorkouts(@RequestBody MultiValueMap<String, String> map, BindingResult result,
                                  @CookieValue(value = "u_id") String userId) throws Exception {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             if (user.get().getRole().equals("trainer")) {
                 if (!result.hasErrors()) {
-                    Workout w = fromWorkoutMapping(workoutMapping, user.get());
+
+                    Workout w = fromWorkoutMapping(map, user.get());
                     workoutRepository.save(w);
                     return "redirect:/workouts";
                 }
@@ -131,79 +131,78 @@ public class WorkoutController {
         return "login";
     }
 
-    private static Workout fromWorkoutMapping(WorkoutMapping workoutMapping, User user) {
-        Workout w = new Workout(workoutMapping.getWorkoutName(), workoutMapping.getDescription(),
-                workoutMapping.getWorkoutDuration(), user);
-        if (workoutMapping.getSets0() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove0()), workoutMapping.getSets0(),
-                    workoutMapping.getReps0(),
-                    workoutMapping.getWeight0(),
-                    workoutMapping.getRewards0());
+    private static Workout fromWorkoutMapping(MultiValueMap<String, String> map, User user) {
+        Workout w = new Workout(map.getFirst("workoutName"), map.getFirst("description"),
+                Integer.parseInt(map.getFirst("workoutDuration")), user);
+        if (map.get("sets0") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move0")), Integer.parseInt(map.getFirst("sets0")),
+                    Integer.parseInt(map.getFirst("reps0")),
+                    Integer.parseInt(map.getFirst("weight0")),
+                    Integer.parseInt(map.getFirst("rewards0")));
         }
 
-        if (workoutMapping.getSets1() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove1()), workoutMapping.getSets1(),
-                    workoutMapping.getReps1(),
-                    workoutMapping.getWeight1(),
-                    workoutMapping.getRewards1());
+        if (map.get("sets1") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move1")), Integer.parseInt(map.getFirst("sets1")),
+                    Integer.parseInt(map.getFirst("reps1")),
+                    Integer.parseInt(map.getFirst("weight1")),
+                    Integer.parseInt(map.getFirst("rewards1")));
         }
 
-        if (workoutMapping.getSets2() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove2()), workoutMapping.getSets2(),
-                    workoutMapping.getReps2(),
-                    workoutMapping.getWeight2(),
-                    workoutMapping.getRewards2());
+        if (map.get("sets2") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move2")), Integer.parseInt(map.getFirst("sets2")),
+                    Integer.parseInt(map.getFirst("reps2")),
+                    Integer.parseInt(map.getFirst("weight2")),
+                    Integer.parseInt(map.getFirst("rewards2")));
         }
 
-        if (workoutMapping.getSets3() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove3()), workoutMapping.getSets3(),
-                    workoutMapping.getReps3(),
-                    workoutMapping.getWeight3(),
-                    workoutMapping.getRewards3());
+        if (map.get("sets3") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move3")), Integer.parseInt(map.getFirst("sets3")),
+                    Integer.parseInt(map.getFirst("reps3")),
+                    Integer.parseInt(map.getFirst("weight3")),
+                    Integer.parseInt(map.getFirst("rewards3")));
         }
 
-        if (workoutMapping.getSets4() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove4()), workoutMapping.getSets4(),
-                    workoutMapping.getReps4(),
-                    workoutMapping.getWeight4(),
-                    workoutMapping.getRewards4());
+        if (map.get("sets4") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move4")), Integer.parseInt(map.getFirst("sets4")),
+                    Integer.parseInt(map.getFirst("reps4")),
+                    Integer.parseInt(map.getFirst("weight4")),
+                    Integer.parseInt(map.getFirst("rewards4")));
         }
 
-        if (workoutMapping.getSets5() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove5()), workoutMapping.getSets5(),
-                    workoutMapping.getReps5(),
-                    workoutMapping.getWeight5(),
-                    workoutMapping.getRewards5());
+        if (map.get("sets5") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move5")), Integer.parseInt(map.getFirst("sets5")),
+                    Integer.parseInt(map.getFirst("reps5")),
+                    Integer.parseInt(map.getFirst("weight5")),
+                    Integer.parseInt(map.getFirst("rewards5")));
         }
 
-        if (workoutMapping.getSets6() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove6()), workoutMapping.getSets6(),
-                    workoutMapping.getReps6(),
-                    workoutMapping.getWeight6(),
-                    workoutMapping.getRewards6());
+        if (map.get("sets6") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move6")), Integer.parseInt(map.getFirst("sets6")),
+                    Integer.parseInt(map.getFirst("reps6")),
+                    Integer.parseInt(map.getFirst("weight6")),
+                    Integer.parseInt(map.getFirst("rewards6")));
         }
 
-        if (workoutMapping.getSets7() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove7()), workoutMapping.getSets7(),
-                    workoutMapping.getReps7(),
-                    workoutMapping.getWeight7(),
-                    workoutMapping.getRewards7());
+        if (map.get("sets7") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move7")), Integer.parseInt(map.getFirst("sets7")),
+                    Integer.parseInt(map.getFirst("reps7")),
+                    Integer.parseInt(map.getFirst("weight7")),
+                    Integer.parseInt(map.getFirst("rewards7")));
         }
 
-        if (workoutMapping.getSets8() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove8()), workoutMapping.getSets8(),
-                    workoutMapping.getReps8(),
-                    workoutMapping.getWeight8(),
-                    workoutMapping.getRewards8());
+        if (map.get("sets8") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move8")), Integer.parseInt(map.getFirst("sets8")),
+                    Integer.parseInt(map.getFirst("reps8")),
+                    Integer.parseInt(map.getFirst("weight8")),
+                    Integer.parseInt(map.getFirst("rewards8")));
         }
 
-        if (workoutMapping.getSets9() != null) {
-            w.addItem(Movement.valueOf(workoutMapping.getMove9()), workoutMapping.getSets9(),
-                    workoutMapping.getReps9(),
-                    workoutMapping.getWeight9(),
-                    workoutMapping.getRewards9());
+        if (map.get("sets9") != null) {
+            w.addItem(Movement.valueOf(map.getFirst("move9")), Integer.parseInt(map.getFirst("sets9")),
+                    Integer.parseInt(map.getFirst("reps9")),
+                    Integer.parseInt(map.getFirst("weight9")),
+                    Integer.parseInt(map.getFirst("rewards9")));
         }
-
         return w;
     }
 }

@@ -30,8 +30,15 @@ public class Trainer extends User {
     }
     public void deleteTrainee(User user)
     {
-        System.out.println("hello");
-        this.traineeList.remove((Trainee) user);
+        for(int i=0;i<traineeList.size();i++)
+        {
+            if(traineeList.get(i).getUsername().equals(user.getUsername()))
+            {
+                this.traineeList.remove(i);
+                break;
+            }
+        }
+        return;
     }
 }
 

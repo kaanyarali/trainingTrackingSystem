@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="/dist/toolkit-inverse.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid container-fluid-spacious">
+    <div class="dashhead mt-4">
+        <div class="dashhead-titles">
+            <h6 class="dashhead-subtitle">Dashboards</h6>
+            <h2 class="dashhead-title">Overview</h2>
+        </div>
+
+        <div class="btn-toolbar dashhead-toolbar">
+            <div class="btn-toolbar-item input-with-icon">
+                <input type="text" value="01/01/15 - 01/08/15" class="form-control" data-provide="datepicker">
+                <span class="icon icon-calendar"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-divider mt-3 mb-5">
+        <h3 class="hr-divider-content hr-divider-heading">Quick stats</h3>
+    </div>
+
+    <div class="row statcards">
+        <div class="col-md-6 col-lg-3 mb-5 mb-md-3">
+            <div class="statcard">
+                <div class="p-a">
+                    <span class="statcard-desc">Visits This Month</span>
+                    <h2 class="statcard-number" th:text="${sessionCountsByMonth.getSessionCountsMonthly().get(5)}">
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hr-divider my-4">
+        <ul class="nav nav-pills hr-divider-content hr-divider-nav" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a href="#visits" class="nav-link active show" role="tab" data-toggle="tab" aria-controls="visits" aria-selected="true">Visits</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a href="#performance" class="nav-link" role="tab" data-toggle="tab" aria-controls="performance" aria-selected="false">Performance</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a href="#rewards" class="nav-link" role="tab" data-toggle="tab" aria-controls="rewards" aria-selected="false">Rewards</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active show" id="visits">
+            <div class="ex-line-graphs"><iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                <canvas class="ex-line-graph"
+                        width="1898" height="700"
+                        data-chart="bar"
+                        th:data-dataset="'[[' + ${sessionCountsByMonth.getMonthValues()} + ']]'"
+                        th:data-labels="'[' + ${sessionCountsByMonth.getMonthNames()} + ']'"
+                        data-dark="true" style="display: block; height: 350px; width: 949px;">
+                </canvas>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="performance">
+            <div class="ex-line-graphs"><iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                <canvas class="ex-line-graph"
+                        width="1898" height="700"
+                        data-chart="line"
+                        th:data-dataset="'[' + ${assessmentMetrics.getMetrics()} + ']'"
+                        th:data-labels="'[' + ${assessmentMetrics.getMetricDates()} + ']'"
+                        th:data-dataset-options="${assessmentMetrics.getMetricNames()}"
+                        data-options="{legend:true, labels: {fontColor: 'rgb(255, 255, 255)'}, position: 'top', display: true,
+                        scales: {yAxes: [{ticks: {max:200}}]} }"
+                        data-dark="true" style="display: block; height: 350px; width: 949px;">
+                </canvas>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="rewards">
+            <div class="row ex-graphs text-center">
+                <div class="ex-line-graphs"><iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                    <canvas class="ex-line-graph"
+                            width="1300" height="500"
+                            data-chart="bar"
+                            th:data-dataset="'[[' + ${rewardPointsByMonth.getMonthValues()} + ']]'"
+                            th:data-labels="'[' + ${rewardPointsByMonth.getMonthNames()} + ']'"
+                            data-dark="true" style="display: block; height: 350px; width: 949px;">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Include jQuery (required) and the JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/chart.js"></script>
+<script src="/dist/toolkit.js"></script>
+<script src="/js/profile.js"></script>
+</body>
+</html>

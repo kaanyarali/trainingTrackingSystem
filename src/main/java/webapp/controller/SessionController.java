@@ -2,6 +2,7 @@ package webapp.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import webapp.repos.SessionRepository;
 import webapp.repos.UserRepository;
 import webapp.repos.WorkoutRepository;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.Date;
 import java.util.Optional;
 
@@ -91,6 +91,8 @@ public class SessionController {
                                   @RequestBody WorkoutItemMapping workoutItemMapping) throws Exception {
         WorkoutItem workoutItem = new WorkoutItem(workoutItemMapping.getMovement(), workoutItemMapping.getNumSets(), workoutItemMapping.getNumRep(),
                 workoutItemMapping.getWeight(), workoutItemMapping.getRewardPoints());
+        System.out.println(workoutItemMapping.getMovement());
+        System.out.println(workoutItemMapping.getRewardPoints());
         Optional<Session> optionalSession = sessionRepository.findById(sessionId);
         if (optionalSession.isPresent()) {
             Session s = optionalSession.get();
@@ -133,6 +135,8 @@ public class SessionController {
                         Date newdate = new Date();
                         s.setCompleteDate(newdate);
                         trainee.setLastSessionDate(newdate);
+                        //s.showPoints();
+                        s.setCompletedRewardingPoint();
                         userRepository.save(trainee);
                         sessionRepository.save(s);
                         return s;

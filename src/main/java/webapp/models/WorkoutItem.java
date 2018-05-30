@@ -12,10 +12,10 @@ public class WorkoutItem {
 
     public WorkoutItem(Movement movement, Integer sets, Integer reps, Integer weight, Integer rewardPoints) {
         this.movement = movement;
-        this.numSets = sets;
-        this.numRep = reps;
-        this.weight = weight;
-        this.rewardPoints = rewardPoints;
+        this.numSets = sets != null ? sets : 0;
+        this.numRep = reps != null ? reps : 0;
+        this.weight = weight != null ? weight : 0;
+        this.rewardPoints = rewardPoints != null ? rewardPoints : 0;
     }
 
     public Movement getMovement() {

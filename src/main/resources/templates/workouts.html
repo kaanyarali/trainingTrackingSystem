@@ -20,7 +20,6 @@
     <style>
         .motion
         {
-        background-color: #f1f1f1;
         padding: 5px 16px;
         margin: 10px 0;
         box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0                   rgba(0,0,0,0.12)!important;
@@ -29,14 +28,15 @@
         form {
             border-radius: 20px;
             padding: 0.3em;
-            background-color: #F9F8F3;
         }
 
         form .row {
             margin-top: 0.5rem;
         }
 
+
     </style>
+    <link href="dist/toolkit-inverse.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -50,8 +50,8 @@
             <div class="col-4">
                 Workout Name:
             </div>
-            <div>
-                <input type="text" name="workoutName">
+            <div class="btn-toolbar-item input-with-icon">
+                <input type="text" name="workoutName" class="form-control input-block" placeholder="Workout Name">
             </div>
         </div>
         <div class="row">
@@ -59,14 +59,25 @@
                 Workout Duration:
             </div>
             <div>
-                <input type="int" name="workoutDuration">
+                <input type="int" name="workoutDuration" class="form-control input-block" placeholder="    Workout Duration">
             </div>
             <br>
             <br>
         </div>
         <div class="row">
+            <div class="col-4">
+                Workout Description
+            </div>
+            <div>
+                <textarea name="description" class="form-control input-block" rows="5" cols="40" placeholder="    Workout Description"></textarea>
+            </div>
+            <br>
+            <br>
+        </div>
+
+        <div class="row">
             <div class="col-sm-4">
-                <p><font size="5" color="black">Motions</font></p>
+                <p><font size="5" color="white">Motions</font></p>
             </div>
         </div>
 
@@ -84,11 +95,16 @@
 
         <div class="row">
             <div class="col">
-                <button type="submit" class="btn btn-primary btn">Save</button>
+                <button type="submit" class="btn btn-lg btn-pill btn-primary">Save</button>
             </div>
         </div>
-
     </form>
+    <a href="/home">
+        <div class="col">
+            <button class="btn btn-lg btn-pill btn-danger" type="submit">Go back</button>
+        </div>
+    </a>
+
     <div class="row">
         <h1>
             Existing Workouts
@@ -107,7 +123,7 @@
             <td th:text="${workout.getName()}"></td>
             <td th:text="${workout.getDuration()}"></td>
             <td th:text="${workout.getRewardingPoint()}"></td>
-            <td><a class="btn btn-primary" role="button" th:href="'/workouts/' + ${workout.getId()}">Go</a></td>
+            <td><a class="btn btn-lg btn-pill btn-primary" role="button" th:href="'/workouts/' + ${workout.getId()}">Go</a></td>
         </tr>
         </tr>
         </tbody>
@@ -128,6 +144,22 @@
       <option>PULL_UP</option>
       <option>PUSH_UP</option>
       <option>BICEPS_CURL</option>
+      <option>RUNNING</option>
+      <option>ROWING</option>
+      <option>BOXING</option>
+      <option>JUMP_ROPE</option>
+      <option>PLANK</option>
+      <option>DIPS</option>
+      <option>SQUAT</option>
+      <option>SHOULDER_PRESS</option>
+      <option>SIT_UP</option>
+      <option>BARBELL_CURL</option>
+      <option>LEG_PRESS</option>
+      <option>LUNGE</option>
+      <option>LEG_RAISE</option>
+      <option>TRICEPS_CURL</option>
+
+
     </select>
   </div>
     </div>
@@ -138,15 +170,15 @@
      Number of Sets
     </div>
     <div>
-      <input type="text" name="sets${i}" >
+      <input type="int" name="sets${i}" class="form-control input-block" placeholder="Number of Sets">
     </div>
   </div>
   <div class="row">
     <div class="col-4">
-     Number of Repetitons
+     Number of Repetitions
     </div>
     <div>
-      <input type="int" name="reps${i}" >
+      <input type="int" name="reps${i}" class="form-control input-block" placeholder="Number of Repetitions">
     </div>
   </div>
   <div class="row">
@@ -154,7 +186,7 @@
        Weight
     </div>
     <div>
-      <input type="int" name="weight${i}" >
+      <input type="int" name="weight${i}" class="form-control input-block" placeholder="Weight" >
     </div>
   </div>
   <div class="row">
@@ -162,7 +194,7 @@
        Reward Points
     </div>
     <div>
-      <input type="int" name="rewards${i}" >
+      <input type="int" name="rewards${i}" class="form-control input-block" placeholder="Reward Points" >
     </div>
   </div>
   </div>

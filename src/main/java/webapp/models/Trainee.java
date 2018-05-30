@@ -87,5 +87,9 @@ public class Trainee extends User {
     public String getLastSessionDateFormatted() {
         return DateFormat.getDateInstance(DateFormat.LONG).format(getLastSessionDate());
     }
+    public int getWorkoutSize()
+    {
+        return workouts.size();
+    }
 
 }

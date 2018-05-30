@@ -85,4 +85,10 @@ public class AssesmentDifference {
     public int getMinutesKmDif() {
         return minutesKmDif;
     }
+
+    public int totalDiffRation() {
+        return Math.abs(getArmSizeDif()) + Math.abs(getChestSizeDif()) + Math.abs(getHeartRateDif()) +
+                Math.abs(getHeightDif()) + Math.abs(getHipsSizeDif())
+                + Math.abs(getMinutesKmDif()) + Math.abs(getWaistSizeDif()) + Math.abs(getWeightDif());
+    }
 }

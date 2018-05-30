@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Bootstrap Theme Example</title>
+    <title>Dashboard</title>
 
     <!-- Include the CSS -->
-    <link href="dist/toolkit-inverse.min.css" rel="stylesheet">
+    <link href="/dist/toolkit-inverse.min.css" rel="stylesheet">
     <style>
         body {
             padding: 50px;
@@ -54,6 +54,7 @@
                 <a class="sidebar-brand img-responsive" href="../index.html">
                     <!--<span class="icon icon-leaf sidebar-brand-icon"></span>-->
                     <span>🏆🥇🥈🥉🏅🎖</span>
+                    <h2 class="dashhead-title" th:text="'Hello @' + ${trainer.getUsername()}"></h2>
                 </a>
             </div>
             <div class="collapse nav-toggleable-md" id="nav-toggleable-md">
@@ -66,16 +67,25 @@
                 <ul class="nav nav-pills nav-stacked flex-column">
                     <li class="nav-header">Dashboard</li>
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" href="#home" data-toggle="tab">Overview</a>
+                        <a class="nav-link active" id="home-tab" href="#home" >Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " id="workout-tab" href="#workouts" data-toggle="tab">Workouts</a>
+                        <a class="nav-link " id="createWorkout" href="/workouts" >Create Workout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " id="trainee-tab" href="#trainees" data-toggle="tab">Trainees</a>
+                        <a class="nav-link " id="workout-tab" href="#workouts" >Workouts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " id="assessment-tab" href="#assessments" data-toggle="tab">Assessments</a>
+                        <a class="nav-link " id="trainee-tab" href="#trainees">Trainees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="createAssessment-tab" href="/Assesment">Create Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="assessment-tab" href="#assessments">Assessments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="signout" href="/signout">Sign Out</a>
                     </li>
 
                     <!--<li class="nav-header">More</li>-->
@@ -144,6 +154,7 @@
                     <h3 class="hr-divider-content hr-divider-heading">
                         Workouts
                     </h3>
+
                 </div>
                 <div th:each="workout : ${workouts}" th:class="'statcard statcard-' + ${workout.getThoughness()} + ' p-4 mb-2'">
                     <h3 class="statcard-number">
@@ -151,8 +162,9 @@
                         <small class="delta-indicator" th:text="${workout.getDuration()} + ' mins'"></small>
                     </h3>
                     <span th:text="${workout.getContent().size()} + ' items'"></span>
-                    <p class="statcard-desc" th:text="${workout.getDescription()}"></p>
+                    <p th:if="${workout.getDescription()} != null" class="statcard-desc" th:text="${workout.getDescription()}"></p>
                 </div>
+
             </div>
             <div id="trainees">
                 <div class="hr-divider">
@@ -181,7 +193,7 @@
                     <div th:each="trainee :${trainer.getTraineeList()}" class="col-md-6 col-xl-3 mb-3 mb-md-4 mb-xl-0">
                         <div class="statcard statcard-primary">
                             <div class="p-3">
-                                <span class="statcard-desc" th:text="${trainee.getUsername()}"></span>
+                                <a class="statcard-desc" th:text="${trainee.getUsername()}" th:href="'/trainees/' + ${trainee.getId()} + '/dashboard/'"></a>
                                 <a class="nav-link text-md-right" href="#" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Signed in as mdo">
                                     <img src="/videos/profile.jpg" alt="" class="rounded-circle">
                                     <small class="iconav-nav-label d-md-none">@mdo</small>
@@ -201,9 +213,9 @@
                         Assessments
                     </h3>
                 </div>
-                <div class="row statcards mt-3 mb-3 text-xs-center text-md-left">
-                    <div th:each="assessment : ${assessments}" class="col-sm-6">
-                        <div class="statcard statcard-primary p-4">
+                <div class="statcards mt-3 mb-3 text-xs-center text-md-left">
+                    <div th:each="assessment : ${assessments}" class="row">
+                        <div class="col-sm-6 statcard statcard-primary p-4">
                             <div class="p-3">
                                 <span class="statcard-desc" th:text="${assessment.getTrainee().getUsername()}"></span>
                                 <a class="nav-link text-md-right" href="#" title="" data-toggle="tooltip" data-placement="right" data-container="body" data-original-title="Signed in as mdo">
@@ -214,44 +226,64 @@
                             </div>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getHeartRate()}" ></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHeartRateDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getHeartRateDif()>0 }" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHeartRateDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getHeartRateDif()<0 }" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getHeartRateDif()}"></small>
                             </div>
                             <span class="statcard-desc">Heartbeats</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getArmSize()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getArmSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getArmSizeDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getArmSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getArmSizeDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getArmSizeDif()}"></small>
                             </div>
                             <span class="statcard-desc">Arm Size</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getHeight()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHeightDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getHeightDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHeightDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getHeightDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getHeightDif()}"></small>
                             </div>
                             <span class="statcard-desc">Height</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getWeight()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getWeightDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getWeightDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getWeightDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getWeightDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getWeightDif()}"></small>
                             </div>
                             <span class="statcard-desc">Weight</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getChestSize()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getChestSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getChestSizeDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getChestSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getChestSizeDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getChestSizeDif()}"></small>
                             </div>
                             <span class="statcard-desc">Chest Size</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getWaistSize()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getWaistSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getWaistSizeDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getWaistSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getWaistSizeDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getWaistSizeDif()}"></small>
                             </div>
                             <span class="statcard-desc">Waist Size</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getHipsSize()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHipsSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getHipsSizeDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getHipsSizeDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getHipsSizeDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getHipsSizeDif()}"></small>
                             </div>
                             <span class="statcard-desc">Hips Size</span>
                             <div class="statcard-number">
                                 <span class="new-value" th:text="${assessment.getMinutesKm()}"></span>
-                                <small th:if="${assessment.getAssesmentDifference()!=null}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getMinutesKmDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getMinutesKmDif()>0}" class="delta-indicator delta-positive" th:text="'%'+${assessment.getAssesmentDifference().getMinutesKmDif()}"></small>
+                                <small th:if="${assessment.getAssesmentDifference()!=null and assessment.getAssesmentDifference().getMinutesKmDif()<0}" class="delta-indicator delta-negative" th:text="'%'+${assessment.getAssesmentDifference().getMinutesKmDif()}"></small>
                             </div>
                             <span class="statcard-desc">Minutes Per Km</span>
+                        </div>
+                        <div th:if="${assessment.getAssesmentDifference()} !=null" class="col-sm-6 statcard statcard-primary">
+                            <div class="align-middle" style="padding-top: 160px;">
+                                <iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                                <canvas class="ex-graph" width="1000" height="1000" data-chart="doughnut"
+                                        th:data-dataset="'[' + ${assessment.getAssessmentDifValues()} + ']'"
+                                        data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#D35400', '#DAF7A6', '#FFC300', '#FF5733', '#C70039', '#900C3F', '#EC11A6'] }"
+                                        th:data-labels="'[' + ${assessment.getAssessmentDifLabels()} + ']'" style="display: block; ">
+                                </canvas>
+                            </div>
+                            <strong class="text-muted">Performance</strong>
+                            <h4>Past vs Latest</h4>
                         </div>
                     </div>
                 </div>
@@ -261,6 +293,9 @@
 </div>
 <!-- Include jQuery (required) and the JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="dist/toolkit.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/chart.js"></script>
+<script src="/dist/toolkit.min.js"></script>
+<script src="/js/profile.js"></script>
 </body>
 </html>

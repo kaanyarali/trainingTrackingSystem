@@ -67,21 +67,27 @@ public class Workout {
         Iterator<WorkoutItem> iterator = content.iterator();
         while(iterator.hasNext())
         {
-            rewardingPoint=rewardingPoint+iterator.next().getRewardPoints();
+            WorkoutItem item = iterator.next();
+            rewardingPoint += item.getRewardPoints();
         }
         return rewardingPoint;
     }
 
     public String getThoughness() {
-        if (getRewardingPoint() >= 0 && getRewardingPoint() < 25) {
+        int rewards = getRewardingPoint();
+        if (rewards >= 0 && rewards < 25) {
             return "warning";
-        } else if (getRewardingPoint() >= 25 && getRewardingPoint() < 50) {
+        } else if (rewards >= 25 && rewards < 50) {
             return "primary";
-        } else if (getRewardingPoint() >= 50 && getRewardingPoint() < 75) {
+        } else if (rewards >= 50 && rewards < 95) {
             return "success";
 
         } else {
             return "danger";
         }
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
